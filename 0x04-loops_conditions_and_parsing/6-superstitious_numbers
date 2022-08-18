@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# This script loops from 1 to 20 and display some text on some iterations
+i=1
+while ((i <= 20))
+do
+	if [[ $i -eq 4 ]]
+	then 
+		echo $i
+		echo "bad luck from China"
+	elif [[ $i -eq 8 ]]
+	then 
+	       echo $i
+	       echo "good luck from Japan" 
+	elif [[ $i -eq 17 ]]
+	then
+	        echo $i
+		echo "bad luck from Italy"
+	else
+		echo $i
+	fi
+	((i++))
+done
