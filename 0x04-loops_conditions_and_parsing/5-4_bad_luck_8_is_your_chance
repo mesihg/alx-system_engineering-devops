@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# This script shows "Best School" 10 times 
-#but for the 9th iteration display Best School and "Hi" on a new line
+# This script loops from 1 to 10 and for the 4th iteration display 'bad luck' 
+# and 'good luck' for 8th iteration. 'Best school' for the other iterations
 i=0
 while ((i < 10))
 do
