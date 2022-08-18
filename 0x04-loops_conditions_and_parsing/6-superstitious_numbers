@@ -5,7 +5,8 @@
 #           displays 17 and then bad luck from Italy for the 17th loop iteration
 
 i=1
-while ((i <= 20))
+
+while [ $i -le 20 ]
 do
         echo $i
 
