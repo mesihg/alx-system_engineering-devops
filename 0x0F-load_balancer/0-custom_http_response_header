@@ -16,9 +16,9 @@ server_config=\
 	server_name _;
 	add_header X-Served-By \$hostname;
 	location / {
-	      try_files \$uri \$uri/ =404
-        }
-        if (\$request_filename ~ redirect_me){
+		try_files \$uri \$uri/ =404;
+	}
+	if (\$request_filename ~ redirect_me){
 	       rewrite ^ https://google.com permanent;
 	}
         error_page 404 /404.html;
