@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Configure web-02 to be identical to web-01
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo service nginx start
+sudo ufw allow 'Nginx HTTP'
+sudo mkdir -p /var/www/html /var/www/error
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+server_config=\
+"server {
+        listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	add_header X-Served-By \$hostname;
+	location / {
+	      try_files \$uri \$uri/ =404
+        }
+        if (\$request_filename ~ redirect_me){
+	       rewrite ^ https://google.com permanent;
+	}
+        error_page 404 /404.html;
+	location = /404.html {
+	           internal;
+        }
+}"
+
+echo "$server_config" > /etc/nginx/sites-enabled/default
+sudo service nginx restart
