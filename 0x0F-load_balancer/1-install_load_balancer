@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Install HAproxy load balancer
+sudo apt-get -y update
+sudo apt-get -y install haproxy
+
+sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
+
+# haproxy configuration
+DOMAIN_NAME='majete.tech'
+haproxy_server_config=\
+"
+defaults
+  mode http
+  timeout client 15s
+  timeout connect 10s
+  timeout server 15s
+  timeout http-request 10s
+frontend $DOMAIN_NAME-frontend
+    bind *:80
+    mode http
+    default_backend $DOMAIN_NAME-backend
+backend $DOMAIN_NAME-backend
+    balance roundrobin
+    server 32317-web-01 44.210.69.40:80 check
+    server 32317-web-02 100.25.135.77:80 check
+"
+
+echo "$haproxy_server_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
+echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
+
+if [ "$(pgrep -c haproxy)" -le 0 ]; then
+	sudo service haproxy start
+else
+	sudo service haproxy restart
+fi
