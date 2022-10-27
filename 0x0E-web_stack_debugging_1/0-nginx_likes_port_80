@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Make nginx listent to port 80
+sudo -i_bak 's/8080/80' /etc/nginx/sites-enabled/default
+sudo restart nginx restart
