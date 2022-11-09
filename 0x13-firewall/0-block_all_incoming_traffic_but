@@ -1,5 +1,5 @@
 apt-get install ufw
-ufw status
+ufw  disable
 ufw enable
 ufw default deny incoming
 ufw default allow outgoing
