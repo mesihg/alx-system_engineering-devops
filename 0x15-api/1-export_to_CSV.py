@@ -15,14 +15,13 @@ if __name__ == '__main__':
             user_name = user_resp.get('name')
             todos = [todo for todo in todos_resp if todo.get('userId') == id]
             complete_todo = [todo for todo in todos if todo.get('completed')]
-
             with open('{}.csv'.format(id), 'w') as file:
                 for todo in todos:
                     file.write(
-                            '"{}","{}","{}","{}"\n'.format(
-                                id,
-                                user_name,
-                                todo.get('completed'),
-                                todo.get('title')
-                                )
-                            )
+                        '"{}","{}","{}","{}"\n'.format(
+                            id,
+                            user_name,
+                            todo.get('completed'),
+                            todo.get('title')
+                        )
+                    )
