@@ -16,16 +16,9 @@ if __name__ == '__main__':
             user_name = user_resp.get('name')
             todos = [todo for todo in todos_resp if todo.get('userId') == id]
             complete_todo = [todo for todo in todos if todo.get('completed')]
-            with open("{}.json".format(id), 'w') as json_file:
-                user_data = list(map(
-                    lambda x: {
-                        "task": x.get("title"),
-                        "completed": x.get("completed"),
-                        "username": user_name
-                    },
-                    todos
-                ))
-                user_data = {
-                    "{}".format(id): user_data
-                }
-                json.dump(user_data, json_file)
+            with open("{}.json".format(id), "w") as jsonfile:
+                json.dump({id: [{
+                    "task": todo.get("title"),
+                    "completed": todo.get("completed"),
+                    "username": user_name
+                } for todo in todos]}, jsonfile)
