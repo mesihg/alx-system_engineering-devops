@@ -12,10 +12,8 @@ if __name__ == '__main__':
         id = int(sys.argv[1])
         if isinstance(id, int):
             user_resp = requests.get("{}/users/{}".format(url, id)).json()
-            todos_resp = requests.get("{}/todos".format(url)).json()
-            user_name = user_resp.get('name')
-            todos = [todo for todo in todos_resp if todo.get('userId') == id]
-            complete_todo = [todo for todo in todos if todo.get('completed')]
+            user_name = user_resp.get('username')
+            todos = requests.get(url + "/todos", params={"userId": id}).json()
             with open("{}.json".format(id), "w") as jsonfile:
                 json.dump({id: [{
                     "task": todo.get("title"),
