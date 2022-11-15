@@ -12,12 +12,10 @@ if __name__ == '__main__':
         id = int(sys.argv[1])
         if isinstance(id, int):
             user_resp = requests.get("{}/users/{}".format(url, id)).json()
-            todos_resp = requests.get("{}/todos".format(url)).json()
-            user_name = user_resp.get('name')
-            todos = [todo for todo in todos_resp if todo.get('userId') == id]
-            complete_todo = [todo for todo in todos if todo.get('completed')]
+            user_name = user_resp.get('username')
+            todos = requests.get(url + "/todos", params={"userId": id}).json()
             with open("{}.csv".format(id), "w", newline="") as csvfile:
                 writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
                 [writer.writerow(
-                    [id, user_name, t.get("completed"), t.get("title")]
-                ) for t in todos]
+                    [id, user_name, todo.get("completed"), todo.get("title")]
+                ) for todo in todos]
