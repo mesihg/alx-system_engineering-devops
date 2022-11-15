@@ -10,7 +10,7 @@ url = "https://jsonplaceholder.typicode.com"
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         id = int(sys.argv[1])
-        users = requests.get("{}/users".format(url)).json()
+        users = requests.get(url + "/users").json()
         with open("todo_all_employees.json", "w") as jsonfile:
             json.dump({
                 u.get("id"): [{
