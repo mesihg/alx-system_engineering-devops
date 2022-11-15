@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """For a given employee ID, returns his/her TODO list progress"""
+import json
 import requests
 import sys
-import json
 
 
 url = "https://jsonplaceholder.typicode.com"
