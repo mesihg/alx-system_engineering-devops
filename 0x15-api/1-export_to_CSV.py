@@ -19,7 +19,7 @@ if __name__ == '__main__':
             with open('{}.csv'.format(id), 'w') as file:
                 for todo in todos:
                     file.write(
-                            '"{}", "{}","{}","{}"\n'.format(
+                            '"{}","{}","{}","{}"\n'.format(
                                 id,
                                 user_name,
                                 todo.get('completed'),
