@@ -5,24 +5,23 @@ import requests
 
 def count_words(subreddit, word_list, found_list=[], after=None):
     """parses the title of all hot articles of given keywords"""
-    url = 'http://www.reddit.com/r/{}/hot.json?after={}'
-    .format(subreddit, after)
     header = {'User-Agent': '0x16-api_advanced/mg1020'}
-    response = requests.get(url, headers=header)
+    posts = requests.get('http://www.reddit.com/r/{}/hot.json?after={}'
+                         .format(subreddit, after), headers=header)
     if after is None:
         word_list = [word.lower() for word in word_list]
 
-    if response.status_code == 200:
-        result_data = response.json()['data']
-        after = result_data['after']
-        articles = result_data['children']
-        for article in articles:
-            title = article['data']['title'].lower()
+    if posts.status_code == 200:
+        posts = posts.json()['data']
+        aft = posts['after']
+        posts = posts['children']
+        for post in posts:
+            title = post['data']['title'].lower()
             for word in title.split(' '):
                 if word in word_list:
                     found_list.append(word)
-        if after is not None:
-            count_words(subreddit, word_list, found_list, after)
+        if aft is not None:
+            count_words(subreddit, word_list, found_list, aft)
         else:
             result = {}
             for word in found_list:
